@@ -45,7 +45,6 @@ group :development do
 end
 
 gem "letter_opener", group: :development
-gem 'bullet', group: 'development'
 
 group :test do
   # Adds support for Capybara system testing and selenium driver
