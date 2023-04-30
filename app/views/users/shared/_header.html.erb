@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary-subtle">
+  <div class="container-fluid">
+    <div>
+      Logged in as  <strong><%= current_user.name %></strong>
+    </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class=" nav-item ">
+          <%= link_to 'Show profile', current_user,  class:"nav-link",class:"btn btn-outline-secondary btn-sm" %>
+        </li>
+
+        <li class=" nav-item ">
+          <%= link_to 'Edit profile', edit_user_registration_path,  class:"nav-link", class:"btn btn-outline-secondary btn-sm" %>
+        </li>
+
+        <li class=" nav-item ">
+          <%= link_to 'Logout', destroy_user_session_path, method: :delete, data: { confirm: 'Are you sure?' }, class:"nav-link", class:"btn btn-outline-secondary btn-sm" %>
+        </li>
+      </ul>
+      <div>
+        <%= form_tag conversations_path, method: :get do %>
+          <%= email_field_tag :search, nil, autofocus: true, autocomplete: "email", placeholder:"Enter email here" %>
+          <%= submit_tag "search", class:"btn btn-outline-success" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,60 @@
+<% if params[:search].present? %>
+  <%= button_to "Back", conversations_path, method: :get, class:"btn btn-outline-warning" %>
+
+  <h1 style="text-align: center;">Search Result</h1>
+  <br>
+  <table class="table text-center table-success">
+    <thead>
+    <tr>
+      <th>User Name</th>
+      <th>Mail Id</th>
+      <th>Message received from current user</th>
+      <th>Message sent to current user</th>
+      <th colspan="5"></th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <% @conversations.each do | conversation | %>
+          <% if conversation.sender_id == user.id && conversation.receiver_id == current_user.id || conversation.sender_id == current_user.id && conversation.receiver_id == user.id %>
+            <% @values = conversation.messages.group(:user_id).count  %>
+            <% @values.each do |key,value| %>
+             <td><%= value %></td>
+              <% end %>
+          <% end %>
+        <% end %>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <% else %>
+<h1 style="text-align: center;">Welcome To My Chat App</h1>
+
+<br>
+<table class="table text-center table-info table-striped">
+  <thead>
+  <tr>
+    <th>User Name</th>
+    <th>Mail Id</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+  <tbody>
+
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+      <td><%= button_to "Chat", conversations_path(sender_id: current_user.id, receiver_id: user.id), method: :post, class:"btn btn-primary" %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+  <div class="pagination justify-content-center">
+    <%= will_paginate @users %>
+  </div>
+<% end %>
